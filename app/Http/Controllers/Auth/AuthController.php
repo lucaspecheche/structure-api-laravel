@@ -3,37 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Domain\Services\AuthService;
-use App\Domain\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SignupFormRequest;
 use App\Http\Requests\SigninFormRequest;
 use Illuminate\Http\Response;
 
-class ApiController extends Controller
+class AuthController extends Controller
 {
-    protected $userService;
     protected $authService;
 
-    public function __construct(
-        UserService $userService,
-        AuthService $authService)
+    public function __construct(AuthService $authService)
     {
-        $this->userService = $userService;
         $this->authService = $authService;
-    }
-
-    public function signup(SignupFormRequest $request)
-    {
-       $user = $this->userService->createUser($request->validated());
-       if($user){
-           return response()->json([
-               'message' => "Sucesso ao Cadastrar User"
-           ], Response::HTTP_CREATED);
-       }
-
-        return response()->json([
-            'message' => "Erro ao Cadastrar User"
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function signin(SigninFormRequest $request)

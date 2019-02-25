@@ -11,11 +11,14 @@
 |
 */
 
-    Route::post('signin', 'ApiController@signin');
-    Route::post('signup', 'ApiController@signup');
+Route::prefix('users')->namespace('Admin')->group(function (){
+    Route::post('create', 'UserController@create');
+});
 
-    Route::middleware('auth:api')->group(function () {
-        Route::post('signout', 'ApiController@signout');
-        Route::get('teste', 'ApiController@teste');
-    });
+Route::post('signin', 'AuthController@signin');
+
+Route::middleware('auth:api')->namespace('Auth')->group(function () {
+        Route::post('signout', 'AuthController@signout');
+        Route::get('teste', 'AuthController@teste');
+});
 
