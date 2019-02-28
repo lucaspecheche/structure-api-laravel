@@ -6,7 +6,10 @@ use App\Domain\Repositories\UserRepository;
 
 class UserService extends BaseServices
 {
-    protected $repository;
+    /**
+     * @var UserRepository
+     */
+    private $repository;
 
     public function __construct(UserRepository $repository)
     {

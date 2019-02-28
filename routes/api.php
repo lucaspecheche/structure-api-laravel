@@ -15,7 +15,7 @@ Route::prefix('users')->namespace('Admin')->group(function (){
     Route::post('create', 'UserController@create');
 });
 
-Route::post('signin', 'AuthController@signin');
+Route::post('signin', 'Auth\AuthController@signin');
 
 Route::middleware('auth:api')->namespace('Auth')->group(function () {
         Route::post('signout', 'AuthController@signout');
