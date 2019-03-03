@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id'
     ];
 
     protected $hidden = [
@@ -20,6 +20,11 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->roles->permissions->where('name', $permission)->isNotEmpty();
     }
 }

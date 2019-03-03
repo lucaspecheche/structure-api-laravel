@@ -2,6 +2,7 @@
 
 namespace App\Domain\Services;
 
+use App\Domain\Models\User;
 use App\Domain\Repositories\UserRepository;
 
 class UserService extends BaseServices
@@ -9,21 +10,28 @@ class UserService extends BaseServices
     /**
      * @var UserRepository
      */
-    private $repository;
+    public $repository;
 
-    public function __construct(UserRepository $repository)
+    protected $roleService;
+
+    public function __construct(UserRepository $repository, RoleService $roleService)
     {
         $this->repository = $repository;
+        $this->roleService = $roleService;
     }
 
-    public function createUser(array $user): bool
+    public function createUser(array $data): ?User
     {
-        $user['password'] = bcrypt($user['password']);
-        return $this->repository->createUser($user);
+        $data['password'] = bcrypt($data['password']);
+        $role = $this->roleService->repository->find($data['role_id']);
+        return $this->repository->createUser($data, $role);
     }
 
-    public function teste($id)
+    public function getPermissionsUser(User $user)
     {
-        dd($this->repository->find($id));
+        return $this->roleService->repository->find(2);
     }
+
+
+
 }

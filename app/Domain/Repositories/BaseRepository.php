@@ -21,9 +21,9 @@ class BaseRepository
         return $this->model->all();
     }
 
-    public function create(array $data)
+    public function create(array $data): bool
     {
-        return $this->model->create($data);
+        return $this->model->fill($data)->save();
     }
 
     public function update(array $data, $id)

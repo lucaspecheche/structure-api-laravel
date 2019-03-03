@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Services\RoleService;
 use App\Domain\Services\UserService;
 use App\Http\Requests\SignupFormRequest;
 use Illuminate\Http\Request;
@@ -11,14 +12,17 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
     protected $userService;
+    protected $roleService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, RoleService $roleService)
     {
         $this->userService = $userService;
+        $this->roleService = $roleService;
     }
+
     public function index()
     {
-        //
+
     }
 
     public function create(SignupFormRequest $request)
