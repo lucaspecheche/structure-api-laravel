@@ -30,12 +30,12 @@ class RoleController extends Controller
 
         if ($role){
             return response()->json([
-                'message' => trans('messages.created_role')
+                'message' => trans('messages.creating_role')
             ], Response::HTTP_CREATED);
         }
 
         return response()->json([
-            'message' => trans('messages.error_created_role')
+            'message' => trans('messages.error_creating_role')
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 

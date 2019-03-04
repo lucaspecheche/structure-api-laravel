@@ -30,12 +30,12 @@ class UserController extends Controller
         $user = $this->userService->createUser($request->validated());
         if($user){
             return response()->json([
-                'message' => "Sucesso ao Cadastrar User"
+                'message' => trans('messages.created_user')
             ], Response::HTTP_CREATED);
         }
 
         return response()->json([
-            'message' => "Erro ao Cadastrar User"
+            'message' => trans('messages.error_creating_user')
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 

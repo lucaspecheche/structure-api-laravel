@@ -34,7 +34,7 @@ class PermissionController extends Controller
         }
 
         return response()->json([
-            'message' => trans('messages.error_created_permission')
+            'message' => trans('messages.error_creating_permission')
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
 
     }
