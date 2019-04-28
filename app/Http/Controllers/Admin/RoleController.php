@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Models\Role;
 use App\Domain\Services\RoleService;
 use App\Http\Requests\RoleFormResquest;
 use Illuminate\Http\Request;

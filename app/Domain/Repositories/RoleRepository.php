@@ -4,7 +4,7 @@ namespace App\Domain\Repositories;
 
 use App\Domain\Models\Role;
 
-class RoleRepository extends BaseRepository
+class RoleRepository
 {
     protected $model = Role::class;
 }

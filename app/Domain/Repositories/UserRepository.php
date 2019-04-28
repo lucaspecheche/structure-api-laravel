@@ -2,14 +2,13 @@
 
 namespace App\Domain\Repositories;
 
-use App\Domain\Models\Role;
 use App\Domain\Models\User;
 
-class UserRepository extends BaseRepository
+class UserRepository
 {
     protected $model = User::class;
 
-    public function createUser(array $data, Role $role): ?User
+    public function createUser(array $data): ?User
     {
         $user = new User();
         $user->fill($data);
