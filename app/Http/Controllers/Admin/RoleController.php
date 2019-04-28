@@ -28,7 +28,7 @@ class RoleController extends Controller
         $data = $request->validated();
         $role = $this->roleService->createRole($data);
 
-        if ($role){
+        if ($role) {
             return response()->json([
                 'message' => trans('messages.creating_role')
             ], Response::HTTP_CREATED);

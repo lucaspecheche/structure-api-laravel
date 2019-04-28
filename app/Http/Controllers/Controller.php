@@ -18,5 +18,4 @@ class Controller extends BaseController
             'message' => trans($locale.$message)
         ], Response::HTTP_CREATED);
     }
-
 }

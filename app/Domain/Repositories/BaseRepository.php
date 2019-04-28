@@ -62,11 +62,11 @@ class BaseRepository
         }
 
         if (count($limit)) {
-            $model = $model->take((int)$limit);
+            $model = $model->take((int) $limit);
         }
 
         if (count($offset)) {
-            $model = $model->skip((int)$offset);
+            $model = $model->skip((int) $offset);
         }
 
         return $model->get();

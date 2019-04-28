@@ -9,13 +9,11 @@ class UserRepository extends BaseRepository
 {
     protected $model = User::class;
 
-    public function createUser (array $data, Role $role): ?User
+    public function createUser(array $data, Role $role): ?User
     {
         $user = new User();
         $user->fill($data);
         $user->save();
         return $user;
     }
-
-
 }

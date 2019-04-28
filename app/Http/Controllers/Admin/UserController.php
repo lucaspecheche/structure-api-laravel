@@ -22,13 +22,12 @@ class UserController extends Controller
 
     public function index()
     {
-
     }
 
     public function create(SignupFormRequest $request)
     {
         $user = $this->userService->createUser($request->validated());
-        if($user){
+        if ($user) {
             return response()->json([
                 'message' => trans('messages.created_user')
             ], Response::HTTP_CREATED);

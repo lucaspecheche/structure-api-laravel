@@ -27,7 +27,7 @@ class PermissionController extends Controller
         $data = $request->validated();
         $user = $this->permissionService->createPermission($data);
 
-        if($user) {
+        if ($user) {
             return response()->json([
                 'message' => trans('messages.created_permission')
             ], Response::HTTP_CREATED);
@@ -36,7 +36,6 @@ class PermissionController extends Controller
         return response()->json([
             'message' => trans('messages.error_creating_permission')
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
-
     }
 
     public function show(Permission $permission)
@@ -54,5 +53,4 @@ class PermissionController extends Controller
     {
         //
     }
-
 }

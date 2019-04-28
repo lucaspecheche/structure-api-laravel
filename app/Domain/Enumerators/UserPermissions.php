@@ -2,7 +2,6 @@
 
 namespace App\Domain\Enumerators;
 
-
 final class UserPermissions
 {
     const NAME = "USER";

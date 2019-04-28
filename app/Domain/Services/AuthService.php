@@ -8,8 +8,8 @@ class AuthService extends BaseServices
 {
     public function loginUser(array $credentials): bool
     {
-        if ($auth = Auth::attempt($credentials)){
-           return true;
+        if ($auth = Auth::attempt($credentials)) {
+            return true;
         }
         return false;
     }

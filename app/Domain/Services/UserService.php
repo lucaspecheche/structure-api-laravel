@@ -16,14 +16,14 @@ class UserService extends BaseServices
 
     public function __construct(UserRepository $repository, RoleService $roleService)
     {
-        $this->repository = $repository;
+        $this->repository  = $repository;
         $this->roleService = $roleService;
     }
 
     public function createUser(array $data): ?User
     {
         $data['password'] = bcrypt($data['password']);
-        $role = $this->roleService->repository->find($data['role_id']);
+        $role             = $this->roleService->repository->find($data['role_id']);
         return $this->repository->createUser($data, $role);
     }
 
@@ -31,7 +31,4 @@ class UserService extends BaseServices
     {
         return $this->roleService->repository->find(2);
     }
-
-
-
 }

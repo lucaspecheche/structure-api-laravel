@@ -17,5 +17,4 @@ class PermissionService extends BaseServices
     {
         return $this->repository->create($data);
     }
-
 }
