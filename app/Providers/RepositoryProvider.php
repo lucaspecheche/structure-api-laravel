@@ -2,29 +2,23 @@
 
 namespace App\Providers;
 
-use App\Domain\Models\User;
+use App\Domain\Repositories\RoleRepository;
 use App\Domain\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
-class RepositoryServiceProvider extends ServiceProvider
+class RepositoryProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
     public function register()
     {
         app()->bind(UserRepository::class, function () {
             return new UserRepository();
         });
+
+        app()->bind(RoleRepository::class, function () {
+            return new RoleRepository();
+        });
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
     public function boot()
     {
         //

@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function signin(SigninFormRequest $request)
     {
-        if($this->authService->loginUser($request->validated())){
+        if ($this->authService->loginUser($request->validated())) {
             return response()->json([
                 'message' => "Usuário Autenticado",
                 'token' => $this->authService->getTokenAccess()
@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function signout()
     {
-        if($this->authService->logoutUser()){
+        if ($this->authService->logoutUser()) {
             return response()->json([
                 'message' => "Vc saiu com sucesso"
             ], Response::HTTP_OK);
@@ -40,7 +40,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => "Ocorreu um erro ao fazer Logout"
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
-
     }
 
     public function teste()

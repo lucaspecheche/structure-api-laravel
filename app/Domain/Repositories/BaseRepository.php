@@ -21,9 +21,9 @@ class BaseRepository
         return $this->model->all();
     }
 
-    public function create(array $data)
+    public function create(array $data): bool
     {
-        return $this->model->create($data);
+        return $this->model->fill($data)->save();
     }
 
     public function update(array $data, $id)
@@ -62,11 +62,11 @@ class BaseRepository
         }
 
         if (count($limit)) {
-            $model = $model->take((int)$limit);
+            $model = $model->take((int) $limit);
         }
 
         if (count($offset)) {
-            $model = $model->skip((int)$offset);
+            $model = $model->skip((int) $offset);
         }
 
         return $model->get();
