@@ -1,6 +1,9 @@
 <?php
 
-Route::middleware('auth:api')->namespace('Admin')->group(function () {
+use App\Notifications\SignupActivate;
+
+Auth::routes(['verify' => true]);
+Route::middleware('auth:api','verified')->namespace('Admin')->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/', 'UserController@index');
@@ -17,10 +20,15 @@ Route::middleware('auth:api')->namespace('Admin')->group(function () {
 
 // TODO: Routes Auth
 Route::post('signin', 'Auth\AuthController@signin');
+Route::get('signup/activate/{token}', 'Auth\AuthController@signupActivate');
 Route::post('users/create', 'Admin\UserController@create');
 
 Route::middleware('auth:api')->namespace('Auth')->group(function () {
         Route::post('signout', 'AuthController@signout');
-        Route::get('teste', 'AuthController@teste');
-});
 
+    Route::get('teste', function (){
+        dd(resource_path());
+        //auth()->user()->notify(new SignupActivate());
+    });
+
+});

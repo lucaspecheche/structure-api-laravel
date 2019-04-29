@@ -16,6 +16,7 @@ class UsersRootSeeder extends Seeder
             'cpf'       => '04595002106',
             'email'     => 'lucas@mail.com',
             'password'  => bcrypt('123456'),
+            'activation_token' => str_random(60),
             'role_id'   =>  $role->id
         ]);
 

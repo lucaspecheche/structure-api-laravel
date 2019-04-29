@@ -8,6 +8,9 @@ class AuthService extends BaseServices
 {
     public function loginUser(array $credentials): bool
     {
+        $credentials['active']     = 1;
+        $credentials['deleted_at'] = null;
+
         if ($auth = Auth::attempt($credentials)) {
             return true;
         }

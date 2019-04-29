@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Domain\Models\User;
 use App\Domain\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SigninFormRequest;
@@ -42,10 +43,17 @@ class AuthController extends Controller
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function teste()
+    public function signupActivate($token)
     {
-        return response()->json([
-            'message' => "Caiu no Teste"
-        ], Response::HTTP_OK);
+        $user = User::where('activation_token', $token)->first();
+        if (! $user) {
+            return response()->json([
+                'message' => 'This activation token is invalid.'
+            ], 404);
+        }
+        $user->active           = true;
+        $user->activation_token = '';
+        $user->save();
+        return $user;
     }
 }
