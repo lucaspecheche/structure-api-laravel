@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domain\Models\User;
 use App\Domain\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SigninFormRequest;
@@ -19,16 +18,12 @@ class AuthController extends Controller
 
     public function signin(SigninFormRequest $request)
     {
-        if ($this->authService->loginUser($request->validated())) {
-            return response()->json([
-                'message' => "Usuário Autenticado",
-                'token' => $this->authService->getTokenAccess()
-            ], Response::HTTP_OK);
-        }
+        $token = $this->authService->loginUser($request->validated());
 
-        return response()->json([
-            'message' => "Falha na Autenticação",
-        ], Response::HTTP_UNAUTHORIZED);
+            return response()->json([
+                'message' => "Usuário Autenticado com sucesso",
+                'token' => $token
+            ], Response::HTTP_OK);
     }
 
     public function signout()
@@ -45,15 +40,10 @@ class AuthController extends Controller
 
     public function signupActivate($token)
     {
-        $user = User::where('activation_token', $token)->first();
-        if (! $user) {
-            return response()->json([
-                'message' => 'This activation token is invalid.'
-            ], 404);
-        }
-        $user->active           = true;
-        $user->activation_token = '';
-        $user->save();
-        return $user;
+        $this->authService->activateUser($token);
+
+        return response()->json([
+            'message' => "Conta confirmada com sucesso!"
+        ], Response::HTTP_OK);
     }
 }

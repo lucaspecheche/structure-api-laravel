@@ -12,13 +12,13 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens, SoftDeletes;
 
     protected $fillable = [
-        'firstName', 'lastName', 'email', 'password', 'role_id', 'active', 'activation_token'
+        'cpf', 'firstName', 'lastName', 'email', 'password', 'role_id', 'active', 'code'
     ];
 
     protected $dates = ['deleted_at'];
 
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at', 'activation_token'
+        'password', 'created_at', 'updated_at', 'code'
     ];
 
     public function roles()
@@ -29,5 +29,10 @@ class User extends Authenticatable
     public function hasPermission(string $permission): bool
     {
         return $this->roles->permissions->where('slug', $permission)->isNotEmpty();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active == 1 ? true : false;
     }
 }

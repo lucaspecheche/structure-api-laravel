@@ -14,11 +14,10 @@ class CreateUsersTable extends Migration
             $table->string('lastName');
             $table->string('cpf', 12)->unique();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->integer('role_id')->unsigned();
             $table->string('password');
             $table->boolean('active')->default(false);
-            $table->string('activation_token')->unique();
+            $table->string('code')->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');

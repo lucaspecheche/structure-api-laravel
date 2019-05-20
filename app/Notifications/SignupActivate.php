@@ -16,14 +16,13 @@ class SignupActivate extends Notification
         return ['mail'];
     }
 
-    public function toMail($notifiable)
+    public function toMail($user)
     {
-        $url = url('/signup/activate/' . $notifiable->activation_token);
+        $url = url('/signup/activate/' . $user->code);
         return (new MailMessage)
-            ->view()
-            ->subject('Confirm your account')
-            ->line('Thanks for signup! Please before you begin, you must confirm your account.')
-            ->action('Confirm Account', url($url))
-            ->line('Thank you for using our application!');
+            ->subject('Confirme sua conta')
+            ->line('Obrigado por se cadastrar! Por favor, antes de começar, você deve confirmar sua conta.')
+            ->action('Confirmar Conta', url($url))
+            ->line('Obrigado por usar nosso aplicativo!');
     }
 }
