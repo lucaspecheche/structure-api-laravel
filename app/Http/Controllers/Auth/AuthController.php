@@ -18,16 +18,12 @@ class AuthController extends Controller
 
     public function signin(SigninFormRequest $request)
     {
-        if ($this->authService->loginUser($request->validated())) {
-            return response()->json([
-                'message' => "Usuário Autenticado",
-                'token' => $this->authService->getTokenAccess()
-            ], Response::HTTP_OK);
-        }
+        $token = $this->authService->loginUser($request->validated());
 
-        return response()->json([
-            'message' => "Falha na Autenticação",
-        ], Response::HTTP_UNAUTHORIZED);
+            return response()->json([
+                'message' => "Usuário Autenticado com sucesso",
+                'token' => $token
+            ], Response::HTTP_OK);
     }
 
     public function signout()
@@ -42,10 +38,12 @@ class AuthController extends Controller
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function teste()
+    public function signupActivate($token)
     {
+        $this->authService->activateUser($token);
+
         return response()->json([
-            'message' => "Caiu no Teste"
+            'message' => "Conta confirmada com sucesso!"
         ], Response::HTTP_OK);
     }
 }

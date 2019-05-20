@@ -6,7 +6,7 @@ use App\Domain\Models\User;
 
 class UserRepository
 {
-    protected $model = User::class;
+    public $model = User::class;
 
     public function createUser(array $data): ?User
     {
@@ -14,5 +14,11 @@ class UserRepository
         $user->fill($data);
         $user->save();
         return $user;
+    }
+
+    public function findByCode(string $token): ?User
+    {
+        return User::where('code', $token)
+            ->first();
     }
 }

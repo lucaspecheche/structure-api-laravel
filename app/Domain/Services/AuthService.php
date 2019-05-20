@@ -2,31 +2,72 @@
 
 namespace App\Domain\Services;
 
+use App\Domain\Models\User;
+use App\Domain\Repositories\UserRepository;
+use App\Exceptions\SystemExceptions\UserExceptions;
+use App\Notifications\SignupActivate;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService extends BaseServices
 {
-    public function loginUser(array $credentials): bool
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
-        if ($auth = Auth::attempt($credentials)) {
-            return true;
+        $this->userRepository = $userRepository;
+    }
+
+    public function loginUser(array $credentials)
+    {
+        if (Auth::attempt($credentials)) {
+            return $this->checkActivation();
         }
-        return false;
+
+        throw UserExceptions::userAuthNotFound();
     }
 
     public function getTokenAccess()
     {
-        return  $this->getUserAuth()->createToken('Access Token')->accessToken;
+        return  $this->userAuth()->createToken('Access Token')->accessToken;
     }
 
-    public function getUserAuth()
+    public function userAuth(): User
     {
-        return Auth::user();
+        return auth()->user();
     }
 
     public function logoutUser(): bool
     {
-        $user = $this->getUserAuth();
+        $user = $this->userAuth();
         return $user->token()->revoke();
+    }
+
+    public function checkActivation()
+    {
+        if ($this->userAuth()->isActive()) {
+            return $this->getTokenAccess();
+        }
+
+        $this->resendUserConfirmation();
+        throw UserExceptions::userNotActivate();
+    }
+
+    public function resendUserConfirmation()
+    {
+        $this->userAuth()->notify(new SignupActivate());
+    }
+
+    public function activateUser($token)
+    {
+        $user = $this->userRepository->findByCode($token);
+
+        if (is_null($user)) {
+            throw UserExceptions::codeNotFound();
+        }
+
+        $user->active = true;
+        $user->save();
+
+        return $user;
     }
 }

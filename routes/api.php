@@ -17,10 +17,9 @@ Route::middleware('auth:api')->namespace('Admin')->group(function () {
 
 // TODO: Routes Auth
 Route::post('signin', 'Auth\AuthController@signin');
+Route::get('signup/activate/{token}', 'Auth\AuthController@signupActivate');
 Route::post('users/create', 'Admin\UserController@create');
 
 Route::middleware('auth:api')->namespace('Auth')->group(function () {
         Route::post('signout', 'AuthController@signout');
-        Route::get('teste', 'AuthController@teste');
 });
-
